@@ -282,7 +282,7 @@ class StateMonitor(object):
             if any_change:  # there have been changes, reduce interval
                 if interval > 1:
                     interval /= 2
-            else:   : there haven't been any changes, increase interval to allow the car to fall asleep
+            else:   # there haven't been any changes, increase interval to allow the car to fall asleep
                 if interval < 2048:
                     interval *= 2
         return interval
