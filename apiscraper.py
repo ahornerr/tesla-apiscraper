@@ -192,6 +192,11 @@ class StateMonitor(object):
                         a_lat = new_value;
                     if element == "native_longitude":
                         a_long = new_value;
+                    # Temperature frequently floats by tenths of degrees which ends up
+                    # increasing polling frequency, preventing sleep, and exacerbating
+                    # the temperature floating problem.
+                    if (element == "inside_temp") or (element == "outside_temp"):
+                        new_value = round(new_value);
                     if (old_value == '') or ((new_value is not None) and (new_value != old_value)):
                         logger.info("Value Change, SG: " + request + ": Logging..." + element +
                                     ": old value: " + str(old_value) + ", new value: " + str(new_value))
@@ -277,7 +282,7 @@ class StateMonitor(object):
             if any_change:  # there have been changes, reduce interval
                 if interval > 1:
                     interval /= 2
-            else:   # there haven't been any changes, increase interval to allow the car to fall asleep
+            else:   : there haven't been any changes, increase interval to allow the car to fall asleep
                 if interval < 2048:
                     interval *= 2
         return interval
