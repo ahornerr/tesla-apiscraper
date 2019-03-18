@@ -195,7 +195,8 @@ class StateMonitor(object):
                     # Temperature frequently floats by tenths of degrees which ends up
                     # increasing polling frequency, preventing sleep, and exacerbating
                     # the temperature floating problem.
-                    if (element == "inside_temp") or (element == "outside_temp"):
+                    if (new_value is not None) and ((element == "inside_temp") or (element == "outside_temp")):
+                        logger.info("Type: " + type(new_value))
                         new_value = round(float(new_value));
                     if (old_value == '') or ((new_value is not None) and (new_value != old_value)):
                         logger.info("Value Change, SG: " + request + ": Logging..." + element +
